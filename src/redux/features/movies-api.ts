@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IMovie } from "../../types/IMovie";
+import envs from "../../config/environments";
 
 export const moviesAPI = createApi({
 	reducerPath: "moviesAPI",
 	baseQuery: fetchBaseQuery({
-		baseUrl: import.meta.env.VITE_API_URL
+		baseUrl: envs.baseApiUrl
 	}),
 	tagTypes: ["Movie"],
 	endpoints: builder => ({
@@ -13,7 +14,7 @@ export const moviesAPI = createApi({
 				return {
 					url: `/?page=${page || 1}&limit=30`,
 					headers: {
-						"X-API-KEY": `${import.meta.env.VITE_API_KEY || " "}`
+						"X-API-KEY": `${envs.apiKey || " "}`
 					}
 				};
 			},
@@ -39,7 +40,7 @@ export const moviesAPI = createApi({
 				return {
 					url: `/${id}`,
 					headers: {
-						"X-API-KEY": `${import.meta.env.VITE_API_KEY || " "}`
+						"X-API-KEY": `${envs.apiKey || " "}`
 					}
 				};
 			},

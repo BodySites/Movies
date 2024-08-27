@@ -55,7 +55,7 @@ const MovieCard: React.FC<CardProperties> = ({ item, onCardDelete }) => {
 			<div
 				className="absolute top-2 right-2 hover:cursor-pointer"
 				onClick={handleDeleteClick}>
-				<FaTrashAlt size={35} color="black" />
+				<FaTrashAlt size={35} color="gray" />
 			</div>
 			<div className="flex flex-col gap-3 p-3">
 				<h2 className="text-xl font-bold">{item.name}</h2>

@@ -14,4 +14,5 @@ export interface IMovie {
 
 export interface IMovieList {
 	docs: IMovie[];
+	pages: number;
 }

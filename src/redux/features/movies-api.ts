@@ -3,7 +3,8 @@ import { IMovie, IMovieList } from "../../types/IMovie";
 import envs from "../../config/environments";
 
 const defaultMovieList: IMovieList = {
-	docs: []
+	docs: [],
+	pages: 1
 };
 
 export const moviesAPI = createApi({

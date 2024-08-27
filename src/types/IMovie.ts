@@ -1,6 +1,6 @@
 export interface IMovie {
 	id: number;
-	enName: string;
+	name: string;
 	description: string;
 	rating: { kp: number };
 	poster: {
@@ -10,4 +10,8 @@ export interface IMovie {
 	genres: Array<{
 		name: string;
 	}>;
+}
+
+export interface IMovieList {
+	docs: IMovie[];
 }

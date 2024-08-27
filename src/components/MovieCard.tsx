@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa6";
 import { IMovie } from "../types/IMovie";
 import { LiaHeart, LiaHeartSolid } from "react-icons/lia";
 import { FaTrashAlt } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hook";
 import { likeMovie, unlikeMovie } from "../redux/features/favourite-slice";
+import { useNavigate } from "react-router-dom";
 
 interface CardProperties {
 	item: IMovie;
@@ -17,6 +18,10 @@ const MovieCard: React.FC<CardProperties> = ({ item, onCardDelete }) => {
 	const dispatch = useAppDispatch();
 
 	const [isFavourite, setIsFavourite] = useState(false);
+
+	const cardRef = useRef<HTMLDivElement>(null);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		favourites.some(favourite => favourite.id === item.id)
@@ -36,8 +41,30 @@ const MovieCard: React.FC<CardProperties> = ({ item, onCardDelete }) => {
 		onCardDelete(item.id);
 	}
 
+	useEffect(() => {
+		document.addEventListener("mousedown", handleClickCard);
+		return () => {
+			document.removeEventListener("mousedown", handleClickCard);
+		};
+	}, []);
+
+	function handleClickCard(event: MouseEvent) {
+		const target = event.target as Element;
+
+		if (
+			cardRef.current &&
+			cardRef.current.contains(target) &&
+			!target.closest("#like") &&
+			!target.closest("#trash")
+		) {
+			navigate(`/movies/${item.id}`);
+		}
+	}
+
 	return (
-		<div className="rounded-md flex flex-col text-black bg-slate-200 shadow-lg max-h-[650px] max-w-96 overflow-hidden relative hover:cursor-pointer">
+		<div
+			ref={cardRef}
+			className="rounded-md flex flex-col text-black bg-slate-200 shadow-lg max-h-[650px] max-w-96 overflow-hidden relative hover:cursor-pointer">
 			<img
 				src={item.poster.previewUrl || item.poster.url}
 				alt="Фото"
@@ -45,6 +72,7 @@ const MovieCard: React.FC<CardProperties> = ({ item, onCardDelete }) => {
 			/>
 			<div
 				className="absolute top-2 left-2 hover:cursor-pointer"
+				id="like"
 				onClick={changeFavourite}>
 				{isFavourite ? (
 					<LiaHeartSolid size={35} color="red" />
@@ -54,6 +82,7 @@ const MovieCard: React.FC<CardProperties> = ({ item, onCardDelete }) => {
 			</div>
 			<div
 				className="absolute top-2 right-2 hover:cursor-pointer"
+				id="trash"
 				onClick={handleDeleteClick}>
 				<FaTrashAlt size={35} color="gray" />
 			</div>

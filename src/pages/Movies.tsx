@@ -41,7 +41,7 @@ const Movies: React.FC = () => {
 	});
 
 	return (
-		<div className="p-12 pt-20 flex flex-col gap-10 font-arial sm:p-8 sm:pt-14">
+		<main className="p-12 pt-20 flex flex-col gap-10 font-arial sm:p-8 sm:pt-14">
 			<div className="text-center">
 				<FilterFavourites
 					title="Только любимые"
@@ -60,7 +60,7 @@ const Movies: React.FC = () => {
 				!isError &&
 				!isLoading && <div className="text-xl text-center">Нет фильмов</div>
 			)}
-		</div>
+		</main>
 	);
 };
 

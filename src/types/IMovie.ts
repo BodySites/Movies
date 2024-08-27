@@ -10,6 +10,7 @@ export interface IMovie {
 	genres: Array<{
 		name: string;
 	}>;
+	year: number;
 }
 
 export interface IMovieList {
